@@ -1,4 +1,4 @@
-![Exemplo de Protótipo](images/exemplo.jpeg)
+![Exemplo de Protótipo](imagens/exemplo.jpeg)
 # 📚 App Book Tracker
 
 Um aplicativo de *diário de leitura* inspirado no sistema do Letterboxd, criado para ajudar leitores a *registrar, avaliar e compartilhar suas experiências com livros* de forma simples e organizada.
