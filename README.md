@@ -20,9 +20,6 @@ O objetivo do projeto é incentivar o hábito da leitura e facilitar o acompanha
 * ✍️ *Comentário curto*
   Escreva uma breve descrição da sua avaliação com até *200 caracteres*.
 
-* 🔎 *Recomendações de livros semelhantes*
-  Para cada livro registrado, é possível recomendar *até 4 livros parecidos*.
-
 * 🗂️ *Histórico de leitura*
   Visualize todos os livros que você já registrou no aplicativo.
 
@@ -37,6 +34,7 @@ Este projeto foi desenvolvido como uma forma de:
 
 ## 🛠️ Possíveis melhorias futuras
 
+* Recomendações de livros semelhantes
 * Sistema de perfis de usuários
 * Lista de livros "quero ler"
 * Feed social de avaliações
@@ -52,6 +50,17 @@ Cada entrada no diário contém:
 * *Comentário:* até 200 caracteres
 * *4 recomendações de livros semelhantes*
 
+## 🛠️ Tecnologias Utilizadas
+
+Este projeto foi desenvolvido utilizando as seguintes tecnologias:
+
+- **Frontend:** Kotlin
+- **Backend:** C#
+- **API:** C#
+- **Banco de dados:** MongoDB
+- **Controle de versão:** Git e GitHub
+- **Gerenciador de pacotes:** Gradle
+  
 ## 🤝 Contribuição
 
 Contribuições são bem-vindas!
