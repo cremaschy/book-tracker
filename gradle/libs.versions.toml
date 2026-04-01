@@ -1,0 +1,111 @@
+[versions]
+# Android
+agp = "8.13.2"
+kotlin = "2.3.20"
+
+# AndroidX / libraries
+coreKtx = "1.18.0"
+lifecycleRuntimeKtx = "2.10.0"
+activityCompose = "1.13.0"
+
+# Compose
+composeBom = "2026.03.01"
+
+# Datastore
+datastore = "1.2.0"
+
+# Koin
+koin = "4.1.1"
+
+# Ktor
+ktor = "3.4.0"
+
+# Navigation 3
+navigation3-core = "1.0.1"
+navigation3-viewmodel = "2.10.0"
+
+# Serialization
+serialization = "2.3.10"
+serialization-core = "1.10.0"
+
+# Coil
+coil = "3.2.0"
+
+# Testing
+mockk = "1.14.9"
+coroutines = "1.10.2"
+
+[libraries]
+# AndroidX - Core
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+#Lifecycle & Activity
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+
+# Compose - UI / Material / Tooling (no explicit versions, use BOM)
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+
+# Datastore
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
+# Koin
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+
+# Ktor
+ktor-client-auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+# Navigation 3
+navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "navigation3-core" }
+navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "navigation3-core" }
+navigation3-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3", version.ref = "navigation3-viewmodel" }
+
+# Serialization
+serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "serialization-core" }
+serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization-core" }
+
+# Coil
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
+
+# Testing
+testing-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+testing-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+
+[bundles]
+compose = [
+    "androidx-compose-ui", "androidx-compose-ui-graphics", "androidx-activity-compose",
+    "androidx-compose-ui-tooling-preview", "androidx-compose-material3",
+]
+
+navigation3 = [
+    "navigation3-ui", "navigation3-runtime", "navigation3-viewmodel",
+]
+
+ktor = [
+    "ktor-client-core", "ktor-client-logging", "ktor-client-content-negotiation",
+    "ktor-serialization-kotlinx-json", "ktor-client-cio", "ktor-client-auth",
+]
+
+testing = [
+    "testing-mockk", "testing-coroutines",
+]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
+
