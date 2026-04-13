@@ -1,0 +1,54 @@
+# Build
+bin/
+obj/
+
+# Logs
+*.log
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+
+# ASP.NET Core
+appsettings.Development.json
+
+# Secrets
+secrets.json
+
+# Publish
+publish/
+
+# NuGet
+*.nupkg
+packages/
+
+# EF Core
+Migrations/
+
+# Docker
+docker-compose.override.yml
+
+# Node (caso tenha front junto futuramente)
+node_modules/
+
+# Coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
