@@ -76,6 +76,7 @@ dependencies {
     // Coil (Image Loading)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.ktor)
+    implementation(libs.androidx.compose.foundation.layout)
 
     // Testing
     testImplementation(kotlin("test"))
