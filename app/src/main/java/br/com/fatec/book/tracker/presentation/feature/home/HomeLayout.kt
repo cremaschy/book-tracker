@@ -75,10 +75,6 @@ fun HomeLayout(
             )
         }
 
-        // CARD FIXO
-
-
-        // 🔥 PAGER ENTRE OS DOIS COMPONENTES
         Column {
             HorizontalPager(
                 state = pagerState,
@@ -96,7 +92,6 @@ fun HomeLayout(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // 🔵 INDICADORES
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center

@@ -16,6 +16,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,12 +30,18 @@ import androidx.compose.ui.unit.dp
 import br.com.fatec.book.tracker.ui.components.button.BookTrackerButton
 import br.com.fatec.book.tracker.ui.components.divider.TextDivider
 import br.com.fatec.book.tracker.ui.components.textfield.BookTrackerTextField
+import br.com.fatec.book.tracker.ui.components.textfield.BookTrackerTextFieldPassword
 import br.com.fatec.book.tracker.ui.images.BookTrackerDrawableResources
 
 @Composable
 fun LoginLayout(
     modifier: Modifier = Modifier,
+    onLogin: (email: String, password: String) -> Unit = { _, _ -> },
+    onRegister: () -> Unit = {},
 ) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = modifier
@@ -60,15 +70,19 @@ fun LoginLayout(
             verticalArrangement = Arrangement.spacedBy(50.dp),
         ) {
             BookTrackerTextField(
-                onValueChange = {},
-                text = "",
+                text = email,
+                onValueChange = {
+                    email = it
+                },
                 title = "E-mail",
                 label = "Informe o E-mail",
             )
 
-            BookTrackerTextField(
-                onValueChange = {},
-                text = "",
+            BookTrackerTextFieldPassword(
+                text = password,
+                onValueChange = {
+                    password = it
+                },
                 title = "Senha",
                 label = "Informe a Senha",
             )
@@ -95,12 +109,15 @@ fun LoginLayout(
         ) {
             BookTrackerButton(
                 text = "Acessar",
-                onClick = {}
+                onClick = {
+                    onLogin(email, password)
+                },
+                enabled = email.isNotEmpty() && password.isNotEmpty()
             )
 
             BookTrackerButton(
                 text = "Cadastrar",
-                onClick = {}
+                onClick = onRegister,
             )
         }
 
@@ -112,6 +129,9 @@ fun LoginLayout(
             horizontalArrangement = Arrangement.Center,
         ) {
             Image(
+                modifier = Modifier.clickable(
+                    onClick = {},
+                ),
                 painter = BookTrackerDrawableResources.Images.imagemGoogle,
                 contentDescription = null,
             )

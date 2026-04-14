@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -20,21 +21,28 @@ import androidx.compose.ui.unit.dp
 fun BookTrackerButton(
     text: String,
     onClick: () -> Unit,
+    enabled: Boolean = true,
     modifier: Modifier = Modifier
 ) {
-    // Definimos o tamanho fixo aqui ou via modifier externo
+    val alpha = if (enabled) 1f else 0.5f
+
     Box(
         modifier = modifier
             .size(width = 120.dp, height = 40.dp)
-            .clickable { onClick() },
+            .alpha(alpha)
+            .clickable(
+                enabled = enabled,
+                onClick = onClick
+            ),
         contentAlignment = Alignment.Center
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
-            val strokeWidth = 1.dp.toPx() // Um pouco mais grosso para parecer desenho
+            val strokeWidth = 1.dp.toPx()
             val cornerRadius = 4.dp.toPx()
             val shadowOffset = 2.dp.toPx()
 
-            // 1. Sombra (Deslocada)
+            val backgroundColor = if (enabled) Color.White else Color.LightGray
+
             drawRoundRect(
                 color = Color.Black.copy(alpha = 0.2f),
                 topLeft = Offset(shadowOffset, shadowOffset),
@@ -42,14 +50,12 @@ fun BookTrackerButton(
                 cornerRadius = CornerRadius(cornerRadius, cornerRadius)
             )
 
-            // 2. Fundo Branco
             drawRoundRect(
-                color = Color.White,
+                color = backgroundColor,
                 size = size,
                 cornerRadius = CornerRadius(cornerRadius, cornerRadius)
             )
 
-            // 3. Borda (Contorno)
             drawRoundRect(
                 color = Color.Black,
                 size = size,
@@ -58,10 +64,10 @@ fun BookTrackerButton(
             )
         }
 
-        // Texto do Botão
         Text(
             text = text,
             style = MaterialTheme.typography.bodyMedium,
+            color = if (enabled) Color.Black else Color.DarkGray
         )
     }
 }
