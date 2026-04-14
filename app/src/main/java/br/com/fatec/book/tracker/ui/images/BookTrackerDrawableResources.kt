@@ -12,6 +12,12 @@ object BookTrackerDrawableResources {
     }
 
     object Vectors {
+        val mostrarSenha
+            @Composable
+            get() = vectorResource(id = R.drawable.ic_mostrar_senha)
 
+        val ocultarSenha
+            @Composable
+            get() = vectorResource(id = R.drawable.ic_ocultar_senha)
     }
 }

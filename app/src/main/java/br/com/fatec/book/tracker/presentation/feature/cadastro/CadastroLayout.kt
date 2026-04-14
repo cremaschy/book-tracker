@@ -1,5 +1,6 @@
 package br.com.fatec.book.tracker.presentation.feature.cadastro
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +18,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,11 +34,18 @@ import br.com.fatec.book.tracker.R
 import br.com.fatec.book.tracker.ui.components.button.BookTrackerButton
 import br.com.fatec.book.tracker.ui.components.divider.TextDivider
 import br.com.fatec.book.tracker.ui.components.textfield.BookTrackerTextField
+import br.com.fatec.book.tracker.ui.images.BookTrackerDrawableResources
 
 @Composable
 fun CadastroLayout(
     modifier: Modifier = Modifier,
+    onRegister: (email: String, password: String) -> Unit = { _, _ -> },
+    onLogin: () -> Unit = {},
 ) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = modifier
@@ -62,22 +74,28 @@ fun CadastroLayout(
             verticalArrangement = Arrangement.spacedBy(50.dp),
         ) {
             BookTrackerTextField(
-                onValueChange = {},
-                text = "",
+                text = email,
+                onValueChange = {
+                    email = it
+                },
                 title = "E-mail",
                 label = "Informe o E-mail",
             )
 
             BookTrackerTextField(
-                onValueChange = {},
-                text = "",
+                text = password,
+                onValueChange = {
+                    password = it
+                },
                 title = "Senha",
                 label = "Informe a Senha",
             )
 
             BookTrackerTextField(
-                onValueChange = {},
-                text = "",
+                text = confirmPassword,
+                onValueChange = {
+                    confirmPassword = it
+                },
                 title = "Confirme a Senha",
                 label = "Confirme a Senha",
             )
@@ -92,12 +110,16 @@ fun CadastroLayout(
         ) {
             BookTrackerButton(
                 text = "Cadastrar",
-                onClick = {}
+                onClick = {
+                    onRegister(email, password)
+                },
+                enabled = email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()
+                        && password == confirmPassword
             )
 
             BookTrackerButton(
                 text = "Entrar",
-                onClick = {}
+                onClick = onLogin,
             )
         }
 
@@ -108,14 +130,13 @@ fun CadastroLayout(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
-            IconButton(
-                onClick = { },
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                    contentDescription = null,
-                )
-            }
+            Image(
+                modifier = Modifier.clickable(
+                    onClick = {},
+                ),
+                painter = BookTrackerDrawableResources.Images.imagemGoogle,
+                contentDescription = null,
+            )
         }
     }
 }
