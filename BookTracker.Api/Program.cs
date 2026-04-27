@@ -1,4 +1,5 @@
 using BookTracker.Api.Data;
+using BookTracker.Api.DTOs;
 using BookTracker.Api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -53,16 +54,62 @@ app.MapGet("/", () => "Hello World!");
 
 #region Livro
 
-app.MapPost("/books", async (Livro livro, AppDbContext db) =>
+app.MapPost("/books", async (LivroCreateDTO livroCreateDTO, AppDbContext db) =>
 {
+    // Validando e Criando o autor
+    var nomeAutor = livroCreateDTO.Autor.Trim();
+
+    var autor = await db.Autores
+        .FirstOrDefaultAsync(a => a.Nome == nomeAutor);
+
+    if (autor == null)
+    {
+        autor = new Autor { Nome = livroCreateDTO.Autor };
+        db.Autores.Add(autor);
+        await db.SaveChangesAsync();
+    }
+
+    // Validando a Situação 
+
+     var situacaoExiste = await db.Situacoes
+        .AnyAsync(s => s.Id_Situacao == livroCreateDTO.Id_Situacao);
+
+    if (!situacaoExiste)
+        return Results.BadRequest("Situação inválida");
+
+    //Criando o livro
+
+    var livro = new Livro
+    {
+        Titulo = livroCreateDTO.Titulo,
+        Sinopse = livroCreateDTO.Sinopse,
+        Total_Paginas = livroCreateDTO.Total_Paginas,
+        Id_Autor = autor.Id_Autor,
+        Id_Situacao = livroCreateDTO.Id_Situacao
+    };
+
     db.Livros.Add(livro);
     await db.SaveChangesAsync();
+
     return Results.Created($"/books/{livro.Id_Livro}", livro);
+
 });
 
 app.MapGet("/books", async (AppDbContext db) =>
 {
-    return await db.Livros.ToListAsync();
+      var livros = await db.Livros
+        .Include(l => l.Autor)
+        .Include(l => l.Situacao)
+        .ToListAsync();
+
+    var response = livros.Select(l => new LivroResponseDTO
+    {
+        Titulo = l.Titulo,
+        Autor = l.Autor.Nome,
+        Situacao = l.Situacao.Descricao
+    });
+
+    return Results.Ok(response);
 });
 
 #endregion
@@ -75,6 +122,16 @@ app.MapPost("/Leitura", async (DailyStat stat, AppDbContext db) =>
     await db.SaveChangesAsync();
     return Results.Ok(stat);
 });
+
+#endregion
+
+#region Situação
+app.MapGet("/situacoes", async (AppDbContext db) =>
+{
+    var situacoes = await db.Situacoes.ToListAsync();
+    return Results.Ok(situacoes);
+});
+
 #endregion
 
 app.UseSwagger();
