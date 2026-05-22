@@ -18,4 +18,7 @@ sealed interface Routes : NavKey {
 
     @Serializable
     data class CommentList(val postId: Int) : Routes
+
+    @Serializable
+    data object AdicionarLivro : Routes
 }

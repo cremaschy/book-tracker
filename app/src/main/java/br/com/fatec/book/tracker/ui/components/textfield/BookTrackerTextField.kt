@@ -57,6 +57,7 @@ fun BookTrackerTextField(
             text = title ?: "",
             style = MaterialTheme.typography.bodyMedium.copy(
                 fontWeight = FontWeight.SemiBold,
+                color = Color.Black
             ),
         )
 
