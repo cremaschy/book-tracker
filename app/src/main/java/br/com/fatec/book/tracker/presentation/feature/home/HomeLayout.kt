@@ -42,7 +42,8 @@ import br.com.fatec.book.tracker.ui.components.card.CardProximasLeituras
 @Composable
 fun HomeLayout(
     home: Home,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onAdicionarLivro: () -> Unit = {}
 ) {
     val pagerState = rememberPagerState(pageCount = { 2 })
 
@@ -83,7 +84,7 @@ fun HomeLayout(
 
                 when (page) {
                     0 -> CardAdicionarLivro(
-                        onClick = {},
+                        onClick = onAdicionarLivro,
                     )
 
                     1 -> CardLivroAtual()

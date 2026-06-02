@@ -43,6 +43,14 @@ class MainViewModel(
         _state.value = MainState.Register
     }
 
+    fun onAdicionarLivro() {
+        _state.value = MainState.AdicionarLivro
+    }
+
+    fun onVoltar() {
+        _state.value = MainState.Logged
+    }
+
     fun onLoginSucess() {
         viewModelScope.launch {
             runCatching {
@@ -79,4 +87,5 @@ sealed interface MainState {
     object Login : MainState
     object Register : MainState
     object Logged : MainState
+    object AdicionarLivro : MainState
 }

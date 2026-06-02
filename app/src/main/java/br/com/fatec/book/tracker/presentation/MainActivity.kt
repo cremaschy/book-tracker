@@ -7,7 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -26,6 +25,7 @@ import br.com.fatec.book.tracker.core.navigation.TopLevelBackStack
 import br.com.fatec.book.tracker.domain.model.Home
 import br.com.fatec.book.tracker.presentation.feature.cadastro.CadastroLayout
 import br.com.fatec.book.tracker.presentation.feature.home.HomeLayout
+import br.com.fatec.book.tracker.presentation.feature.livro.AdicionarLivroLayout
 import br.com.fatec.book.tracker.presentation.feature.login.LoginLayout
 import br.com.fatec.book.tracker.presentation.feature.placeholder.list.PlaceholderScreen
 import br.com.fatec.book.tracker.presentation.feature.placeholder.list.state.PlaceholderViewEvent
@@ -112,10 +112,28 @@ class MainActivity : ComponentActivity() {
                                             home = Home(
                                                 nome = "Gustavo",
                                                 ofensiva = 3,
-                                            )
+                                            ),
+                                            onAdicionarLivro = {
+                                                viewModel.onAdicionarLivro()
+                                            }
                                         )
                                     }
                                 },
+                            )
+                        }
+                    }
+
+                    MainState.AdicionarLivro -> {
+                        Scaffold(
+                            modifier = Modifier.fillMaxSize()
+                        ) { innerPadding ->
+                    AdicionarLivroLayout(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(innerPadding),
+                                onVoltar = {
+                                    viewModel.onVoltar()
+                                }
                             )
                         }
                     }
