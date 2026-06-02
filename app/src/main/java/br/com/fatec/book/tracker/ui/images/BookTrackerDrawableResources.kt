@@ -19,5 +19,13 @@ object BookTrackerDrawableResources {
         val ocultarSenha
             @Composable
             get() = vectorResource(id = R.drawable.ic_ocultar_senha)
+
+        val voltar
+            @Composable
+            get() = vectorResource(id = R.drawable.ic_arrow_back)
+
+        val buscar
+            @Composable
+            get() = vectorResource(id = R.drawable.ic_search)
     }
 }
