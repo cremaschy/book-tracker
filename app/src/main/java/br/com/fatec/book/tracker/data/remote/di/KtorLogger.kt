@@ -7,12 +7,14 @@ import kotlinx.serialization.json.JsonElement
 
 class KtorLogger() : Logger {
     override fun log(message: String) {
-        if(message.startsWith("{") || message.startsWith("[")) {
+        if (message.startsWith("{") || message.startsWith("[")) {
             Log.d("KTOR", prettyJson(message))
+        } else {
+            Log.d("KTOR", message)
         }
     }
 
-    fun prettyJson(json: String) : String {
+    fun prettyJson(json: String): String {
         return try {
             val parsedJson = Json.parseToJsonElement(json)
             Json { prettyPrint = true }.encodeToString(JsonElement.serializer(), parsedJson)

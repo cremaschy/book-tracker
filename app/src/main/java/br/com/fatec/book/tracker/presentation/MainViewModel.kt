@@ -2,7 +2,7 @@ package br.com.fatec.book.tracker.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.fatec.book.tracker.domain.repository.AuthRepository
+import br.com.fatec.book.tracker.domain.repository.TokenRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,76 +10,53 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
 class MainViewModel(
-    private val authRepository: AuthRepository,
+    private val tokenRepository: TokenRepository,
 ) : ViewModel() {
     private val _state = MutableStateFlow<MainState>(MainState.Loading)
     val state = _state.asStateFlow()
 
-   init {
-       checkUserLogged()
-   }
+    private var wasLogged = false
+
+    init {
+        checkUserLogged()
+    }
 
     private fun checkUserLogged() {
         viewModelScope.launch {
-            delay(2.seconds)
-            authRepository.token.collect { token ->
-                when {
-                    token != null -> {
-                        _state.value = MainState.Logged
-                    }
-                    else -> {
-                        _state.value = MainState.Login
-                    }
+            tokenRepository.token.collect { token ->
+                if (token != null) {
+                    wasLogged = true
+                    _state.value = MainState.Logged
+                } else if (wasLogged) {
+                    wasLogged = false
+                    _state.value = MainState.SessionExpired
+                } else {
+                    _state.value = MainState.Login
                 }
             }
         }
     }
 
-    fun onLogin() {
+    fun onSessionExpiredConfirmed() {
         _state.value = MainState.Login
     }
 
-    fun onRegister() {
+    fun onLogout() {
+        viewModelScope.launch {
+            wasLogged = false
+            tokenRepository.logout()
+            _state.value = MainState.Login
+        }
+    }
+
+    fun navigateToLogin() {
+        _state.value = MainState.Login
+    }
+
+    fun navigateToRegister() {
         _state.value = MainState.Register
     }
 
-    fun onAdicionarLivro() {
-        _state.value = MainState.AdicionarLivro
-    }
-
-    fun onVoltar() {
-        _state.value = MainState.Logged
-    }
-
-    fun onLoginSucess() {
-        viewModelScope.launch {
-            runCatching {
-                authRepository.saveToken()
-            }.fold(
-                onSuccess = {
-                    _state.value = MainState.Logged
-                },
-                onFailure = {
-                    _state.value = MainState.Login
-                }
-            )
-        }
-    }
-
-    fun onRegisterSucess() {
-        viewModelScope.launch {
-            runCatching {
-                authRepository.saveToken()
-            }.fold(
-                onSuccess = {
-                    _state.value = MainState.Logged
-                },
-                onFailure = {
-                    _state.value = MainState.Login
-                }
-            )
-        }
-    }
 }
 
 sealed interface MainState {
@@ -87,5 +64,5 @@ sealed interface MainState {
     object Login : MainState
     object Register : MainState
     object Logged : MainState
-    object AdicionarLivro : MainState
+    object SessionExpired : MainState
 }

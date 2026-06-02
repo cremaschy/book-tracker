@@ -3,13 +3,16 @@ package br.com.fatec.book.tracker.presentation
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -27,6 +30,8 @@ import br.com.fatec.book.tracker.presentation.feature.cadastro.CadastroLayout
 import br.com.fatec.book.tracker.presentation.feature.home.HomeLayout
 import br.com.fatec.book.tracker.presentation.feature.livro.AdicionarLivroLayout
 import br.com.fatec.book.tracker.presentation.feature.login.LoginLayout
+import br.com.fatec.book.tracker.presentation.feature.login.LoginScreen
+import br.com.fatec.book.tracker.presentation.feature.login.state.LoginViewEvent
 import br.com.fatec.book.tracker.presentation.feature.placeholder.list.PlaceholderScreen
 import br.com.fatec.book.tracker.presentation.feature.placeholder.list.state.PlaceholderViewEvent
 import br.com.fatec.book.tracker.ui.components.LoadingScreen
@@ -36,10 +41,14 @@ import org.koin.android.ext.android.inject
 class MainActivity : ComponentActivity() {
     private val viewModel by inject<MainViewModel>()
 
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(
+                android.graphics.Color.TRANSPARENT,
+                android.graphics.Color.TRANSPARENT,
+            ),
+        )
         setContent {
             BookTrackerTheme {
                 val state by viewModel.state.collectAsStateWithLifecycle()
@@ -62,15 +71,18 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier
                                 .fillMaxSize()
                         ) { innerPadding ->
-                            LoginLayout(
+                            LoginScreen(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(innerPadding),
-                                onLogin = { _, _ ->
-                                    viewModel.onLoginSucess()
-                                },
-                                onRegister = {
-                                    viewModel.onRegister()
+                                onEvent = { event ->
+                                    when (event) {
+                                        LoginViewEvent.NavigateToRegister -> {
+                                            viewModel.navigateToRegister()
+                                        }
+
+                                        else -> {}
+                                    }
                                 }
                             )
                         }
@@ -85,12 +97,8 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(innerPadding),
-                                onRegister = { _, _ ->
-                                    viewModel.onRegisterSucess()
-                                },
-                                onLogin = {
-                                    viewModel.onLogin()
-                                }
+                                onRegister = { _, _ -> },
+                                onLogin = {},
                             )
                         }
                     }
@@ -100,22 +108,18 @@ class MainActivity : ComponentActivity() {
                             remember { TopLevelBackStack<NavKey>(Routes.Home) }
                         Scaffold(
                             modifier = Modifier.fillMaxSize()
-                        ) {
-                            val screenModifier = Modifier.fillMaxSize()
+                        ) { innerPadding ->
                             NavDisplay(
                                 backStack = topLevelBackStack.backStack,
                                 onBack = { topLevelBackStack.removeLast() },
                                 entryProvider = entryProvider {
                                     entry<Routes.Home> {
                                         HomeLayout(
-                                            modifier = screenModifier,
+                                            modifier = Modifier.padding(innerPadding),
                                             home = Home(
                                                 nome = "Gustavo",
                                                 ofensiva = 3,
                                             ),
-                                            onAdicionarLivro = {
-                                                viewModel.onAdicionarLivro()
-                                            }
                                         )
                                     }
                                 },
@@ -123,55 +127,20 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    MainState.AdicionarLivro -> {
-                        Scaffold(
-                            modifier = Modifier.fillMaxSize()
-                        ) { innerPadding ->
-                    AdicionarLivroLayout(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(innerPadding),
-                                onVoltar = {
-                                    viewModel.onVoltar()
+                    MainState.SessionExpired -> {
+                        AlertDialog(
+                            onDismissRequest = {},
+                            title = { Text(text = "Sessão expirada") },
+                            text = { Text(text = "Sua sessão expirou. Faça login novamente para continuar.") },
+                            confirmButton = {
+                                TextButton(onClick = { viewModel.onSessionExpiredConfirmed() }) {
+                                    Text(text = "OK")
                                 }
-                            )
-                        }
+                            },
+                        )
                     }
                 }
             }
         }
-    }
-
-    @Composable
-    fun NavExample() {
-        val backStack = remember { mutableStateListOf<Any>(Routes.PlaceholderList) }
-
-        NavDisplay(
-            backStack = backStack,
-            onBack = { backStack.removeLastOrNull() },
-            entryProvider = { key ->
-                when (key) {
-                    is Routes.PlaceholderList -> NavEntry(key) {
-                        PlaceholderScreen(
-                            onEvent = { event ->
-                                when (event) {
-                                    is PlaceholderViewEvent.NavigateToComments -> {
-                                        backStack.add(Routes.CommentList(postId = event.postId))
-                                    }
-                                }
-                            }
-                        )
-                    }
-
-                    is Routes.CommentList -> NavEntry(key) {
-                        Column(modifier = Modifier.fillMaxSize()) {
-                            Text("Comments for Post ID: ${key.postId}")
-                        }
-                    }
-
-                    else -> NavEntry(Unit) { Text("Unknown route") }
-                }
-            }
-        )
     }
 }

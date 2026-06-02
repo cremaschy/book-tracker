@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import br.com.fatec.book.tracker.data.data.data.source.AuthDataSource
 import br.com.fatec.book.tracker.data.data.data.source.JsonDataSource
-import br.com.fatec.book.tracker.data.local.data.source.AuthDataSourceLocal
+import br.com.fatec.book.tracker.data.data.data.source.TokenDataSource
 import br.com.fatec.book.tracker.data.local.data.source.JsonDataSourceLocal
+import br.com.fatec.book.tracker.data.local.data.source.TokenDataSourceLocal
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -26,6 +26,6 @@ val localModule = module {
     singleOf(::JsonDataSourceLocal)
         .bind<JsonDataSource.Local>()
 
-    singleOf(::AuthDataSourceLocal)
-        .bind<AuthDataSource.Local>()
+    singleOf(::TokenDataSourceLocal)
+        .bind<TokenDataSource.Local>()
 }
