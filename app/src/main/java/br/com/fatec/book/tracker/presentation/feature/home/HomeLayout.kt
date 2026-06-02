@@ -72,7 +72,7 @@ fun HomeLayout(
             Image(
                 contentDescription = null,
                 modifier = Modifier.weight(1f),
-                painter = painterResource(id = R.drawable.logo_booktracker),
+                painter = painterResource(id = R.drawable.imagem_logo_booktracker),
             )
         }
 

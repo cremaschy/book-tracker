@@ -1,5 +1,6 @@
 package br.com.fatec.book.tracker.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -35,6 +36,7 @@ import org.koin.android.ext.android.inject
 class MainActivity : ComponentActivity() {
     private val viewModel by inject<MainViewModel>()
 
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
