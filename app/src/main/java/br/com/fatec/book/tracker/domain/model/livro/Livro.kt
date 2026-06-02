@@ -1,13 +1,10 @@
 package br.com.fatec.book.tracker.domain.model.livro
 
 data class Livro(
+    val id: Int,
     val titulo: String,
-    val isbn: String,
-    val paginaTotal: Int,
-    val idioma: String,
-    val autores: List<String>? = null,
-    val tradutores: List<String>? = null,
-    val ilustradores: List<String>? = null,
-    val narradores: List<String>? = null,
-    val descriscao: String? = null,
+    val sinopse: String,
+    val totalPaginas: Int,
+    val autor: String,
+    val idSituacao: Int,
 )

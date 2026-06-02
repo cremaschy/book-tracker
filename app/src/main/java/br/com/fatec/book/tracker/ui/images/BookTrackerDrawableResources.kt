@@ -9,6 +9,18 @@ object BookTrackerDrawableResources {
         val imagemGoogle
             @Composable
             get() = painterResource(id = R.drawable.imagem_google)
+
+        val imagemLogo
+            @Composable
+            get() = painterResource(id = R.drawable.imagem_logo_booktracker)
+
+        val bookTracker
+            @Composable
+            get() = painterResource(id = R.drawable.imagem_booktracker)
+
+        val livro
+            @Composable
+            get() = painterResource(id = R.drawable.imagem_livro)
     }
 
     object Vectors {

@@ -17,7 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
-import br.com.fatec.book.tracker.domain.enums.ReadingStatus
+import br.com.fatec.book.tracker.domain.model.livro.ReadingStatus
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
