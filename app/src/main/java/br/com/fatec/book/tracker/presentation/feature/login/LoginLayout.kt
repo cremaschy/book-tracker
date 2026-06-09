@@ -16,10 +16,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.fatec.book.tracker.presentation.feature.login.state.LoginIntent
+import br.com.fatec.book.tracker.presentation.feature.login.state.LoginViewState
 import br.com.fatec.book.tracker.ui.components.button.BookTrackerButton
 import br.com.fatec.book.tracker.ui.components.divider.TextDivider
 import br.com.fatec.book.tracker.ui.components.textfield.BookTrackerTextField
@@ -35,13 +33,10 @@ import br.com.fatec.book.tracker.ui.images.BookTrackerDrawableResources
 
 @Composable
 fun LoginLayout(
+    state: LoginViewState,
     modifier: Modifier = Modifier,
-    onLogin: (email: String, password: String) -> Unit = { _, _ -> },
-    onRegister: () -> Unit = {},
+    onIntent: (LoginIntent) -> Unit,
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = modifier
@@ -70,18 +65,18 @@ fun LoginLayout(
             verticalArrangement = Arrangement.spacedBy(50.dp),
         ) {
             BookTrackerTextField(
-                text = email,
+                text = state.email,
                 onValueChange = {
-                    email = it
+                    onIntent(LoginIntent.OnEmailChanged(it))
                 },
                 title = "E-mail",
                 label = "Informe o E-mail",
             )
 
             BookTrackerTextFieldPassword(
-                text = password,
+                text = state.senha,
                 onValueChange = {
-                    password = it
+                    onIntent(LoginIntent.OnPasswordChanged(it))
                 },
                 title = "Senha",
                 label = "Informe a Senha",
@@ -110,14 +105,16 @@ fun LoginLayout(
             BookTrackerButton(
                 text = "Acessar",
                 onClick = {
-                    onLogin(email, password)
+                    onIntent(LoginIntent.OnLoginClicked)
                 },
-                enabled = email.isNotEmpty() && password.isNotEmpty()
+                enabled = state.isLoginEnable
             )
 
             BookTrackerButton(
                 text = "Cadastrar",
-                onClick = onRegister,
+                onClick = {
+                    onIntent(LoginIntent.OnRegisterClicked)
+                },
             )
         }
 
@@ -143,6 +140,9 @@ fun LoginLayout(
 @Composable
 fun LoginLayoutPreview() {
     MaterialTheme {
-        LoginLayout()
+        LoginLayout(
+            state = LoginViewState(),
+            onIntent = {},
+        )
     }
 }

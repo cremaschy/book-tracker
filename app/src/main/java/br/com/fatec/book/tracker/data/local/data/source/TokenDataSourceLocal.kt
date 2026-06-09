@@ -4,16 +4,16 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import br.com.fatec.book.tracker.data.data.data.source.AuthDataSource
+import br.com.fatec.book.tracker.data.data.data.source.TokenDataSource
 import br.com.fatec.book.tracker.domain.model.Token
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
-class AuthDataSourceLocal(
+class TokenDataSourceLocal(
     private val dataSource: DataStore<Preferences>,
-) : AuthDataSource.Local {
+) : TokenDataSource.Local {
     private val userKey = stringPreferencesKey("user_key")
 
     override val token: Flow<Token?>
@@ -23,7 +23,7 @@ class AuthDataSourceLocal(
             }
         }
 
-    override suspend fun auth(): Token? {
+    override suspend fun getToken(): Token? {
         return runCatching {
             dataSource.data.map { preferences ->
                 preferences[userKey]?.let {
@@ -34,13 +34,13 @@ class AuthDataSourceLocal(
     }
 
     override suspend fun saveToken(token: Token?) {
-        dataSource.edit { preferences ->
-            if(token == null) {
-                preferences.remove(userKey)
+        dataSource.edit { prefs ->
+            if (token == null) {
+                prefs.remove(userKey)
                 return@edit
-            } else {
-                preferences[userKey] = Json.encodeToString(Token.serializer(), token)
             }
+
+            prefs[userKey] = Json.encodeToString(Token.serializer(), token)
         }
     }
 }
