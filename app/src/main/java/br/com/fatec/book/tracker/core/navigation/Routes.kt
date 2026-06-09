@@ -21,4 +21,10 @@ sealed interface Routes : NavKey {
 
     @Serializable
     data object AdicionarLivro : Routes
+
+    @Serializable
+    data object Biblioteca : Routes
+
+    @Serializable
+    data object Detalhes : Routes
 }

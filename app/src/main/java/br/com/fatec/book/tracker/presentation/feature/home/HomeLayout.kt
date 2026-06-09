@@ -34,6 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.fatec.book.tracker.R
 import br.com.fatec.book.tracker.domain.model.Home
+import br.com.fatec.book.tracker.presentation.feature.home.state.HomeIntent
+import br.com.fatec.book.tracker.presentation.feature.home.state.HomeViewState
 import br.com.fatec.book.tracker.ui.components.card.CardAdicionarLivro
 import br.com.fatec.book.tracker.ui.components.card.CardLivroAtual
 import br.com.fatec.book.tracker.ui.components.card.CardProximasLeituras
@@ -41,7 +43,8 @@ import br.com.fatec.book.tracker.ui.components.card.CardProximasLeituras
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeLayout(
-    home: Home,
+    state: HomeViewState,
+    onIntent: (HomeIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState(pageCount = { 2 })
@@ -63,7 +66,7 @@ fun HomeLayout(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = "Bem vindo, ${home.nome}",
+                text = "Bem vindo, ${state.home.nome}",
                 modifier = Modifier.weight(1f),
                 style = MaterialTheme.typography.titleLarge,
             )
@@ -83,10 +86,16 @@ fun HomeLayout(
 
                 when (page) {
                     0 -> CardAdicionarLivro(
-                        onClick = {},
+                        onClick = {
+                            onIntent(HomeIntent.OnAdicionarClicked)
+                        },
                     )
 
-                    1 -> CardLivroAtual()
+                    1 -> CardLivroAtual(
+                        onClick = {
+                            onIntent(HomeIntent.OnBibliotecaClicked)
+                        }
+                    )
                 }
             }
 
@@ -129,10 +138,13 @@ fun HomeLayout(
 fun HomeLayoutPreview() {
     MaterialTheme {
         HomeLayout(
-            home = Home(
-                nome = "Gustavo",
-                ofensiva = 3,
-            )
+            state = HomeViewState(
+                Home(
+                    nome = "Gustavo",
+                    ofensiva = 3,
+                ),
+            ),
+            onIntent = {}
         )
     }
 }

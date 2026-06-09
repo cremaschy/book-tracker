@@ -1,39 +1,33 @@
 package br.com.fatec.book.tracker.presentation
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import br.com.fatec.book.tracker.core.navigation.Routes
 import br.com.fatec.book.tracker.core.navigation.TopLevelBackStack
-import br.com.fatec.book.tracker.domain.model.Home
 import br.com.fatec.book.tracker.presentation.feature.cadastro.CadastroLayout
-import br.com.fatec.book.tracker.presentation.feature.home.HomeLayout
-import br.com.fatec.book.tracker.presentation.feature.livro.AdicionarLivroLayout
-import br.com.fatec.book.tracker.presentation.feature.login.LoginLayout
+import br.com.fatec.book.tracker.presentation.feature.home.HomeScreen
+import br.com.fatec.book.tracker.presentation.feature.home.state.HomeViewEvent
+import br.com.fatec.book.tracker.presentation.feature.adicionar.AdicionarLivroLayout
+import br.com.fatec.book.tracker.presentation.feature.adicionar.AdicionarLivroScreen
+import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroViewEvent
 import br.com.fatec.book.tracker.presentation.feature.login.LoginScreen
 import br.com.fatec.book.tracker.presentation.feature.login.state.LoginViewEvent
-import br.com.fatec.book.tracker.presentation.feature.placeholder.list.PlaceholderScreen
-import br.com.fatec.book.tracker.presentation.feature.placeholder.list.state.PlaceholderViewEvent
 import br.com.fatec.book.tracker.ui.components.LoadingScreen
 import br.com.fatec.book.tracker.ui.theme.BookTrackerTheme
 import org.koin.android.ext.android.inject
@@ -114,13 +108,44 @@ class MainActivity : ComponentActivity() {
                                 onBack = { topLevelBackStack.removeLast() },
                                 entryProvider = entryProvider {
                                     entry<Routes.Home> {
-                                        HomeLayout(
+                                        HomeScreen(
                                             modifier = Modifier.padding(innerPadding),
-                                            home = Home(
-                                                nome = "Gustavo",
-                                                ofensiva = 3,
-                                            ),
+                                            onEvent = { event ->
+                                                when (event) {
+                                                    is HomeViewEvent.NavigateToAdicionar -> {
+                                                        topLevelBackStack.add(
+                                                            Routes.AdicionarLivro
+                                                        )
+
+                                                    }
+
+                                                    is HomeViewEvent.NavigateToBiblioteca -> {
+                                                        topLevelBackStack.add(
+                                                            Routes.Biblioteca
+                                                        )
+                                                    }
+                                                }
+                                            },
                                         )
+                                    }
+                                    entry<Routes.AdicionarLivro> {
+                                        AdicionarLivroScreen(
+                                            modifier = Modifier.padding(innerPadding),
+                                            onEvent = { event ->
+                                                when (event) {
+                                                    AdicionarLivroViewEvent.NavigateToHome -> {
+                                                        topLevelBackStack.removeLast()
+                                                    }
+                                                }
+                                            }
+
+                                        )
+                                    }
+                                    entry<Routes.Biblioteca> {
+                                    }
+
+                                    entry<Routes.Detalhes> {
+
                                     }
                                 },
                             )
