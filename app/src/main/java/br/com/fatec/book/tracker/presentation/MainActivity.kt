@@ -26,6 +26,10 @@ import br.com.fatec.book.tracker.presentation.feature.home.state.HomeViewEvent
 import br.com.fatec.book.tracker.presentation.feature.adicionar.AdicionarLivroLayout
 import br.com.fatec.book.tracker.presentation.feature.adicionar.AdicionarLivroScreen
 import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroViewEvent
+import br.com.fatec.book.tracker.presentation.feature.biblioteca.BibliotecaScreen
+import br.com.fatec.book.tracker.presentation.feature.biblioteca.state.BibliotecaViewEvent
+import br.com.fatec.book.tracker.presentation.feature.detalhe.DetalheScreen
+import br.com.fatec.book.tracker.presentation.feature.detalhe.state.DetalheViewEvent
 import br.com.fatec.book.tracker.presentation.feature.login.LoginScreen
 import br.com.fatec.book.tracker.presentation.feature.login.state.LoginViewEvent
 import br.com.fatec.book.tracker.ui.components.LoadingScreen
@@ -142,10 +146,36 @@ class MainActivity : ComponentActivity() {
                                         )
                                     }
                                     entry<Routes.Biblioteca> {
+                                        BibliotecaScreen(
+                                            modifier = Modifier.padding(innerPadding),
+                                            onEvent = { event ->
+                                                when (event) {
+                                                    BibliotecaViewEvent.NavigateToHome -> {
+                                                        topLevelBackStack.removeLast()
+                                                    }
+
+                                                    is BibliotecaViewEvent.NavigateToDetalhe -> {
+                                                        topLevelBackStack.add(
+                                                            Routes.Detalhes(event.livro)
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        )
                                     }
 
                                     entry<Routes.Detalhes> {
-
+                                        DetalheScreen(
+                                            livro = it.livro,
+                                            modifier = Modifier.padding(innerPadding),
+                                            onEvent = { event ->
+                                                when (event) {
+                                                    DetalheViewEvent.NavigateToBiblioteca -> {
+                                                        topLevelBackStack.removeLast()
+                                                    }
+                                                }
+                                            }
+                                        )
                                     }
                                 },
                             )

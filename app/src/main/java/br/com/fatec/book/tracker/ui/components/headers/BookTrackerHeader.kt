@@ -13,20 +13,25 @@ import br.com.fatec.book.tracker.ui.components.BookTrackerSearchBar
 import br.com.fatec.book.tracker.ui.images.BookTrackerDrawableResources
 
 @Composable
-fun BookTrackerHeader() {
+fun BookTrackerHeader(
+    onClick: () -> Unit = {},
+    isSearchEnabled: Boolean = false,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(
-            onClick = { },
+            onClick = onClick,
         ) {
             Icon(
                 imageVector = BookTrackerDrawableResources.Vectors.voltar,
                 contentDescription = null,
             )
         }
-        BookTrackerSearchBar()
+        if (isSearchEnabled) {
+            BookTrackerSearchBar()
+        }
     }
 }
 

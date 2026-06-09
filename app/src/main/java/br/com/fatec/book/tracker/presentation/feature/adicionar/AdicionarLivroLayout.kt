@@ -31,10 +31,10 @@ import androidx.compose.ui.unit.sp
 import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroIntent
 import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroViewState
 import br.com.fatec.book.tracker.ui.components.button.BookTrackerButton
+import br.com.fatec.book.tracker.ui.components.headers.BookTrackerHeader
 import br.com.fatec.book.tracker.ui.components.textfield.BookTrackerTextField
 
 @Composable
-
 fun AdicionarLivroLayout(
     modifier: Modifier = Modifier,
     state: AdicionarLivroViewState,
@@ -46,110 +46,104 @@ fun AdicionarLivroLayout(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(Color.White)
-            .padding(horizontal = 34.dp, vertical = 52.dp)
             .imePadding(),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text(
-            text = "Adicionar Livro",
-            style = MaterialTheme.typography.titleLarge.copy(
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                fontSize = 35.sp
-            ),
-        )
-
-        Text(
-            modifier = Modifier.padding(bottom = 35.dp),
-            text = "Insira as informações do livro abaixo",
-            style = MaterialTheme.typography.titleLarge.copy(
-                color = Color.Black
-            ),
+        BookTrackerHeader(
+            onClick = {
+                onIntent(AdicionarLivroIntent.OnBackClicked)
+            },
+            isSearchEnabled = false,
         )
 
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(50.dp),
-        ) {
-            BookTrackerTextField(
-                text = state.titulo,
-                modifier = modifier.fillMaxWidth(),
-                onValueChange = {
-                    onIntent(AdicionarLivroIntent.OnTituloChange(it))
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Next,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Text(
+                text = "Adicionar Livro",
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold,
                 ),
-                title = "Livro",
-                label = "Título do Livro",
             )
 
-            BookTrackerTextField(
-                modifier = modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Next,
-                ),
-                text = state.autor,
-                onValueChange = {
-                    onIntent(AdicionarLivroIntent.OnAutorChange(it))
-                },
-                title = "Autor",
-                label = "Nome do Autor",
+            Text(
+                modifier = Modifier.padding(bottom = 35.dp),
+                text = "Insira as informações do livro abaixo",
+                style = MaterialTheme.typography.titleSmall,
             )
 
-            BookTrackerTextField(
-                modifier = modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Next,
-                ),
-                text = state.totalPaginas,
-                onValueChange = {
-                    onIntent(AdicionarLivroIntent.OnTotalPaginasChange(it))
-                },
-                title = "Total de Páginas",
-                label = "Total de Páginas",
-            )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(50.dp),
+            ) {
+                BookTrackerTextField(
+                    text = state.titulo,
+                    modifier = modifier.fillMaxWidth(),
+                    onValueChange = {
+                        onIntent(AdicionarLivroIntent.OnTituloChange(it))
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next,
+                    ),
+                    title = "Livro",
+                    label = "Título do Livro",
+                )
 
-            BookTrackerTextField(
-                modifier = modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Next,
-                ),
-                text = state.sinopse,
-                onValueChange = {
-                    onIntent(AdicionarLivroIntent.OnSinopseChange(it))
-                },
-                title = "Descrição",
-                label = "Descrição",
-            )
+                BookTrackerTextField(
+                    modifier = modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next,
+                    ),
+                    text = state.autor,
+                    onValueChange = {
+                        onIntent(AdicionarLivroIntent.OnAutorChange(it))
+                    },
+                    title = "Autor",
+                    label = "Nome do Autor",
+                )
+
+                BookTrackerTextField(
+                    modifier = modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next,
+                    ),
+                    text = state.totalPaginas,
+                    onValueChange = {
+                        onIntent(AdicionarLivroIntent.OnTotalPaginasChange(it))
+                    },
+                    title = "Total de Páginas",
+                    label = "Total de Páginas",
+                )
+
+                BookTrackerTextField(
+                    modifier = modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next,
+                    ),
+                    text = state.sinopse,
+                    onValueChange = {
+                        onIntent(AdicionarLivroIntent.OnSinopseChange(it))
+                    },
+                    title = "Descrição",
+                    label = "Descrição",
+                )
+            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Row(
+        BookTrackerButton(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            BookTrackerButton(
-                modifier = Modifier.weight(1f),
-                text = "Voltar",
-                onClick = {
-                    onIntent(AdicionarLivroIntent.OnBackClicked)
-                }
-            )
-            BookTrackerButton(
-                modifier = Modifier.weight(1f),
-                text = "Adicionar",
-                onClick = {
-                    onIntent(AdicionarLivroIntent.OnAdicionarClicked)
-                },
-                enabled = state.isEnabled,
-                callToAction = true
-            )
-        }
-
+            text = "Adicionar",
+            onClick = {
+                onIntent(AdicionarLivroIntent.OnAdicionarClicked)
+            },
+            enabled = state.isEnabled,
+        )
     }
 }
 

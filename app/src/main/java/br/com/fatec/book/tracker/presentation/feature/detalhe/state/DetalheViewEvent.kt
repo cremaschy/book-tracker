@@ -1,4 +1,5 @@
 package br.com.fatec.book.tracker.presentation.feature.detalhe.state
 
-class DetalheViewEvent {
+interface DetalheViewEvent {
+    data object NavigateToBiblioteca : DetalheViewEvent
 }

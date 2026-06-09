@@ -31,13 +31,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.fatec.book.tracker.R
+import br.com.fatec.book.tracker.domain.model.livro.Livro
+import br.com.fatec.book.tracker.presentation.feature.detalhe.state.DetalheIntent
+import br.com.fatec.book.tracker.presentation.feature.detalhe.state.DetalheViewState
 import br.com.fatec.book.tracker.ui.images.BookTrackerDrawableResources
 import br.com.fatec.book.tracker.ui.theme.BookTrackerTheme
 
 @Composable
 fun DetalheLayout(
     modifier: Modifier = Modifier,
-    nomeLivro: String = "Nome do livro",
+    state: DetalheViewState,
+    onIntent: (DetalheIntent) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -45,93 +49,9 @@ fun DetalheLayout(
             .verticalScroll(rememberScrollState())
             .padding(bottom = 16.dp)
     ) {
-        HeaderDetalhe(nomeLivro = nomeLivro)
+        HeaderDetalhe(nomeLivro = state.livro.titulo)
 
         Spacer(modifier = Modifier.height(32.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            InfoBox(
-                text = stringResource(id = R.string.detalhe_tipo_livro),
-                modifier = Modifier.weight(1f)
-            )
-            InfoBox(
-                text = stringResource(id = R.string.detalhe_tipo_pagina),
-                modifier = Modifier.weight(1f)
-            )
-            InfoBox(
-                text = stringResource(id = R.string.detalhe_total_paginas),
-                modifier = Modifier.weight(1f)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        ActionItem(
-            icon = {
-                Box(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .background(Color.Black)
-                )
-            },
-            text = stringResource(id = R.string.detalhe_selecionar_colecoes)
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        ActionItem(
-            icon = {
-                Box(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .background(Color.Black)
-                )
-            },
-            text = stringResource(id = R.string.detalhe_adicionar_etiqueta)
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            InfoBox(
-                text = stringResource(id = R.string.detalhe_retomar_leitura),
-                modifier = Modifier
-                    .weight(1f)
-                    .height(80.dp)
-            )
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(80.dp)
-                    .border(BorderStroke(1.dp, Color.Black))
-                    .background(Color(0xFFD9D9D9))
-                    .padding(8.dp)
-            ) {
-                Column {
-                    Text(
-                        text = stringResource(id = R.string.detalhe_desde),
-                        style = MaterialTheme.typography.bodySmall,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = stringResource(id = R.string.detalhe_pausado),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color(0xFFFFCC00),
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-        }
     }
 }
 
@@ -158,25 +78,6 @@ private fun HeaderDetalhe(
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF333333)
             )
-
-            Icon(
-                imageVector = BookTrackerDrawableResources.Vectors.buscar,
-                contentDescription = null,
-                modifier = Modifier.align(Alignment.TopEnd)
-            )
-
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .align(Alignment.BottomEnd)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(4.dp)
-                        .border(2.dp, Color(0xFF333333))
-                )
-            }
         }
 
         Box(
@@ -199,54 +100,22 @@ private fun HeaderDetalhe(
     }
 }
 
-@Composable
-private fun InfoBox(
-    text: String,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier
-            .border(BorderStroke(1.dp, Color.Black))
-            .background(Color(0xFFD9D9D9))
-            .padding(8.dp)
-            .height(60.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Normal
-        )
-    }
-}
-
-@Composable
-private fun ActionItem(
-    icon: @Composable () -> Unit,
-    text: String,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        icon()
-        Spacer(modifier = Modifier.width(16.dp))
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Normal
-        )
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun DetalheLayoutPreview() {
     BookTrackerTheme {
-        DetalheLayout()
+        DetalheLayout(
+            state = DetalheViewState(
+                livro = Livro(
+                    id = 1,
+                    titulo = "Dom Casmurro",
+                    sinopse = "Um romance sobre ciume e memoria.",
+                    totalPaginas = 256,
+                    autor = "Machado de Assis",
+                    idSituacao = 1,
+                )
+            ),
+            onIntent = {},
+        )
     }
 }

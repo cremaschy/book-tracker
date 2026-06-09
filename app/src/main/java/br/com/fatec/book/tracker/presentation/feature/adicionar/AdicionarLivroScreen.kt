@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.fatec.book.tracker.core.view.model.onEachWithLifecycle
+import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroIntent
 import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroViewEvent
 import br.com.fatec.book.tracker.presentation.feature.placeholder.list.screen.ErrorScreen
 import br.com.fatec.book.tracker.presentation.feature.placeholder.list.state.ScreenType
@@ -26,14 +27,18 @@ fun AdicionarLivroScreen(
 
         ScreenType.Content -> {
             AdicionarLivroLayout(
-                state = state,
                 modifier = modifier,
-                onIntent = viewModel::onIntent,
+                state = state,
+                onIntent = viewModel::onIntent
             )
         }
 
         ScreenType.Error -> {
-            ErrorScreen()
+            ErrorScreen(
+                onRetry = {
+                    viewModel.onIntent(AdicionarLivroIntent.OnRetryClicked)
+                }
+            )
         }
     }
 
