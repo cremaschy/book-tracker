@@ -40,6 +40,7 @@ fun BookTrackerTextField(
     enabled: Boolean = true,
     singleLine: Boolean = true,
     readOnly: Boolean? = false,
+    modifier: Modifier = Modifier,
     customStyle: TextStyle? = null,
     inputTextMask: InputTextMask? = null,
     onValueChange: (String) -> Unit = {},
@@ -50,7 +51,7 @@ fun BookTrackerTextField(
 ) {
     val focusManager = LocalFocusManager.current
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start,
     ) {
         Text(
@@ -62,7 +63,7 @@ fun BookTrackerTextField(
         )
 
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .border(2.dp, Color.Black)
                 .background(Color.White)

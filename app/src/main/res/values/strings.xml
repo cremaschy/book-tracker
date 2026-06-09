@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">BookTracker</string>
+    <string name="detalhe_tipo_livro">Tipo de livro</string>
+    <string name="detalhe_tipo_pagina">Tipo de pagina</string>
+    <string name="detalhe_total_paginas">Total de paginas</string>
+    <string name="detalhe_selecionar_colecoes">Selecionar coleções</string>
+    <string name="detalhe_adicionar_etiqueta">Adicionar etiqueta</string>
+    <string name="detalhe_retomar_leitura">Retomar leitura</string>
+    <string name="detalhe_desde">Desde 234 A.C</string>
+    <string name="detalhe_pausado">Pausado</string>
 </resources>

@@ -1,6 +1,7 @@
 package br.com.fatec.book.tracker.core.navigation
 
 import androidx.navigation3.runtime.NavKey
+import br.com.fatec.book.tracker.domain.model.livro.Livro
 import kotlinx.serialization.Serializable
 
 sealed interface Routes : NavKey {
@@ -21,4 +22,10 @@ sealed interface Routes : NavKey {
 
     @Serializable
     data object AdicionarLivro : Routes
+
+    @Serializable
+    data object Biblioteca : Routes
+
+    @Serializable
+    data class Detalhes(val livro: Livro) : Routes
 }

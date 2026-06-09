@@ -45,7 +45,12 @@ fun BibliotecaLayout(
             .imePadding(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        BookTrackerHeader()
+        BookTrackerHeader(
+            onClick = {
+                onIntent(BibliotecaIntent.OnBackClicked)
+            },
+            isSearchEnabled = true,
+        )
 
         Text(
             text = state.filterSelected?.status ?: "Minha Biblioteca",
@@ -75,12 +80,12 @@ fun BibliotecaLayout(
         ) {
             items(
                 items = state.livros,
-                key = { it.id },
+                key = { it.id ?: 0 },
             ) { livro ->
                 LivroItem(
                     livro = livro,
                     onClick = {
-                        onIntent(BibliotecaIntent.OnLivroClick(livro))
+                        onIntent(BibliotecaIntent.OnLivroClicked(livro))
                     },
                 )
             }

@@ -18,7 +18,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-private const val BASE_URL = "http://localhost:5092/swagger/v1/swagger.json/"
+private const val BASE_URL = "http://10.0.2.2:5092/"
 fun createHttpClient(engine: HttpClientEngine, repository: AuthRepository) = HttpClient(engine) {
     applyDefaults(repository)
 }
