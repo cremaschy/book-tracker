@@ -14,5 +14,4 @@ val presentationModule = module {
     viewModelOf(::AdicionarLivroViewModel)
     viewModelOf(::BibliotecaViewModel)
     viewModelOf(::DetalheViewModel)
-
 }
