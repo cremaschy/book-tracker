@@ -1,6 +1,5 @@
 package br.com.fatec.book.tracker.presentation.feature.login
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -26,10 +24,8 @@ import androidx.compose.ui.unit.dp
 import br.com.fatec.book.tracker.presentation.feature.login.state.LoginIntent
 import br.com.fatec.book.tracker.presentation.feature.login.state.LoginViewState
 import br.com.fatec.book.tracker.ui.components.button.BookTrackerButton
-import br.com.fatec.book.tracker.ui.components.divider.TextDivider
 import br.com.fatec.book.tracker.ui.components.textfield.BookTrackerTextField
 import br.com.fatec.book.tracker.ui.components.textfield.BookTrackerTextFieldPassword
-import br.com.fatec.book.tracker.ui.images.BookTrackerDrawableResources
 
 @Composable
 fun LoginLayout(
@@ -43,8 +39,7 @@ fun LoginLayout(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(Color.White)
-            .padding(horizontal = 34.dp, vertical = 52.dp)
-            .imePadding(),
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Text(
@@ -97,42 +92,14 @@ fun LoginLayout(
 
         Spacer(modifier = modifier.weight(1f))
 
-        Row(
+        BookTrackerButton(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            BookTrackerButton(
-                text = "Acessar",
-                onClick = {
-                    onIntent(LoginIntent.OnLoginClicked)
-                },
-                enabled = state.isLoginEnable
-            )
-
-            BookTrackerButton(
-                text = "Cadastrar",
-                onClick = {
-                    onIntent(LoginIntent.OnRegisterClicked)
-                },
-            )
-        }
-
-        TextDivider()
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
-            Image(
-                modifier = Modifier.clickable(
-                    onClick = {},
-                ),
-                painter = BookTrackerDrawableResources.Images.imagemGoogle,
-                contentDescription = null,
-            )
-        }
+            text = "Acessar",
+            onClick = {
+                onIntent(LoginIntent.OnLoginClicked)
+            },
+            enabled = state.isLoginEnable
+        )
     }
 }
 

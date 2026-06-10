@@ -30,6 +30,7 @@ import br.com.fatec.book.tracker.presentation.feature.biblioteca.state.Bibliotec
 import br.com.fatec.book.tracker.ui.components.BookTrackerDropdownFiltro
 import br.com.fatec.book.tracker.ui.components.headers.BookTrackerHeader
 import br.com.fatec.book.tracker.ui.images.BookTrackerDrawableResources
+import br.com.fatec.book.tracker.ui.theme.BookTrackerTheme
 
 @Composable
 fun BibliotecaLayout(
@@ -49,7 +50,7 @@ fun BibliotecaLayout(
             onClick = {
                 onIntent(BibliotecaIntent.OnBackClicked)
             },
-            isSearchEnabled = true,
+            isSearchEnabled = false,
         )
 
         Text(
@@ -132,7 +133,7 @@ fun LivroItem(
 @Preview
 @Composable
 fun BibliotecaLayoutPreview() {
-    MaterialTheme {
+    BookTrackerTheme {
         BibliotecaLayout(
             state = BibliotecaViewState(
                 livros = listOf(

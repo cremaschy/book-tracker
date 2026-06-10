@@ -10,4 +10,5 @@ data class Livro(
     val totalPaginas: Int,
     val autor: String,
     val idSituacao: Int,
+    val paginasLidas: Int = 0
 )

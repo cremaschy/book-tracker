@@ -6,10 +6,6 @@ import br.com.fatec.book.tracker.R
 
 object BookTrackerDrawableResources {
     object Images {
-        val imagemGoogle
-            @Composable
-            get() = painterResource(id = R.drawable.imagem_google)
-
         val imagemLogo
             @Composable
             get() = painterResource(id = R.drawable.imagem_logo_booktracker)

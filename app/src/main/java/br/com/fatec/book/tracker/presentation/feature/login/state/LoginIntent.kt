@@ -4,6 +4,5 @@ interface LoginIntent {
     data class OnEmailChanged(val email: String) : LoginIntent
     data class OnPasswordChanged(val senha: String) : LoginIntent
     object OnLoginClicked : LoginIntent
-    object OnRegisterClicked : LoginIntent
     object OnRetryClicked : LoginIntent
 }

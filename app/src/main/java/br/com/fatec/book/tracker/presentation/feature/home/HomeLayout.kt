@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
@@ -30,15 +29,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.fatec.book.tracker.R
-import br.com.fatec.book.tracker.domain.model.Home
 import br.com.fatec.book.tracker.presentation.feature.home.state.HomeIntent
 import br.com.fatec.book.tracker.presentation.feature.home.state.HomeViewState
 import br.com.fatec.book.tracker.ui.components.card.CardAdicionarLivro
-import br.com.fatec.book.tracker.ui.components.card.CardLivroAtual
-import br.com.fatec.book.tracker.ui.components.card.CardProximasLeituras
+import br.com.fatec.book.tracker.ui.components.card.CardBiblioteca
+import br.com.fatec.book.tracker.ui.theme.BookTrackerTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -55,8 +54,7 @@ fun HomeLayout(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(Color.White)
-            .padding(horizontal = 34.dp, vertical = 52.dp)
-            .imePadding(),
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp),
     ) {
 
@@ -66,9 +64,11 @@ fun HomeLayout(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = "Bem vindo, ${state.home.nome}",
+                text = "Bem vindo(a) ao Book Tracker",
                 modifier = Modifier.weight(1f),
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                ),
             )
 
             Image(
@@ -76,6 +76,7 @@ fun HomeLayout(
                 modifier = Modifier.weight(1f),
                 painter = painterResource(id = R.drawable.imagem_logo_booktracker),
             )
+
         }
 
         Column {
@@ -91,7 +92,7 @@ fun HomeLayout(
                         },
                     )
 
-                    1 -> CardLivroAtual(
+                    1 -> CardBiblioteca(
                         onClick = {
                             onIntent(HomeIntent.OnBibliotecaClicked)
                         }
@@ -128,22 +129,15 @@ fun HomeLayout(
                 }
             }
         }
-
-        CardProximasLeituras()
     }
 }
 
 @Preview
 @Composable
 fun HomeLayoutPreview() {
-    MaterialTheme {
+    BookTrackerTheme {
         HomeLayout(
-            state = HomeViewState(
-                Home(
-                    nome = "Gustavo",
-                    ofensiva = 3,
-                ),
-            ),
+            state = HomeViewState(),
             onIntent = {}
         )
     }

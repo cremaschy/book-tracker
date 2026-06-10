@@ -1,6 +1,6 @@
 package br.com.fatec.book.tracker.presentation.feature.login.state
 
-import br.com.fatec.book.tracker.presentation.feature.placeholder.list.state.ScreenType
+import br.com.fatec.book.tracker.ui.components.ScreenType
 
 data class LoginViewState(
     val email: String = "",

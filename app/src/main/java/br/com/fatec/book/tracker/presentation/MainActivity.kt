@@ -20,16 +20,14 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import br.com.fatec.book.tracker.core.navigation.Routes
 import br.com.fatec.book.tracker.core.navigation.TopLevelBackStack
-import br.com.fatec.book.tracker.presentation.feature.cadastro.CadastroLayout
-import br.com.fatec.book.tracker.presentation.feature.home.HomeScreen
-import br.com.fatec.book.tracker.presentation.feature.home.state.HomeViewEvent
-import br.com.fatec.book.tracker.presentation.feature.adicionar.AdicionarLivroLayout
 import br.com.fatec.book.tracker.presentation.feature.adicionar.AdicionarLivroScreen
 import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroViewEvent
 import br.com.fatec.book.tracker.presentation.feature.biblioteca.BibliotecaScreen
 import br.com.fatec.book.tracker.presentation.feature.biblioteca.state.BibliotecaViewEvent
 import br.com.fatec.book.tracker.presentation.feature.detalhe.DetalheScreen
 import br.com.fatec.book.tracker.presentation.feature.detalhe.state.DetalheViewEvent
+import br.com.fatec.book.tracker.presentation.feature.home.HomeScreen
+import br.com.fatec.book.tracker.presentation.feature.home.state.HomeViewEvent
 import br.com.fatec.book.tracker.presentation.feature.login.LoginScreen
 import br.com.fatec.book.tracker.presentation.feature.login.state.LoginViewEvent
 import br.com.fatec.book.tracker.ui.components.LoadingScreen
@@ -75,28 +73,9 @@ class MainActivity : ComponentActivity() {
                                     .padding(innerPadding),
                                 onEvent = { event ->
                                     when (event) {
-                                        LoginViewEvent.NavigateToRegister -> {
-                                            viewModel.navigateToRegister()
-                                        }
-
                                         else -> {}
                                     }
                                 }
-                            )
-                        }
-                    }
-
-                    MainState.Register -> {
-                        Scaffold(
-                            modifier = Modifier
-                                .fillMaxSize()
-                        ) { innerPadding ->
-                            CadastroLayout(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(innerPadding),
-                                onRegister = { _, _ -> },
-                                onLogin = {},
                             )
                         }
                     }

@@ -7,9 +7,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.fatec.book.tracker.core.view.model.onEachWithLifecycle
 import br.com.fatec.book.tracker.presentation.feature.login.state.LoginIntent
 import br.com.fatec.book.tracker.presentation.feature.login.state.LoginViewEvent
-import br.com.fatec.book.tracker.presentation.feature.placeholder.list.screen.ErrorScreen
-import br.com.fatec.book.tracker.presentation.feature.placeholder.list.state.ScreenType
+import br.com.fatec.book.tracker.ui.components.ErrorScreen
 import br.com.fatec.book.tracker.ui.components.LoadingScreen
+import br.com.fatec.book.tracker.ui.components.ScreenType
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
