@@ -1,6 +1,7 @@
 package br.com.fatec.book.tracker.presentation.feature.detalhe.state
 
 import br.com.fatec.book.tracker.domain.model.livro.Livro
+import br.com.fatec.book.tracker.ui.components.ScreenType
 
 data class DetalheViewState(
     val livro: Livro = Livro(
@@ -11,5 +12,7 @@ data class DetalheViewState(
         autor = "0",
         idSituacao = 0,
         paginasLidas = 0,
-    )
+    ),
+    val screenType: ScreenType = ScreenType.Content,
+    val error: String? = null
 )

@@ -6,6 +6,5 @@ interface DetalheIntent {
     data class Initialize(val livro: Livro) : DetalheIntent
     data object OnBackClicked : DetalheIntent
     data object OnDeleteClicked : DetalheIntent
-    data object OnAtualizarProgressoClicked : DetalheIntent
     data class OnSalvarProgresso(val paginas: Int) : DetalheIntent
 }

@@ -35,5 +35,9 @@ object BookTrackerDrawableResources {
         val buscar
             @Composable
             get() = vectorResource(id = R.drawable.ic_search)
+
+        val sair
+            @Composable
+            get() = vectorResource(id = R.drawable.ic_sair)
     }
 }

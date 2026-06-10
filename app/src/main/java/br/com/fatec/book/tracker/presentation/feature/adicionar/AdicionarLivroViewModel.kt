@@ -2,6 +2,8 @@ package br.com.fatec.book.tracker.presentation.feature.adicionar
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.fatec.book.tracker.domain.repository.BibliotecaRepository
+import br.com.fatec.book.tracker.domain.repository.TokenRepository
 import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroIntent
 import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroViewEvent
 import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroViewState
@@ -12,7 +14,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class AdicionarLivroViewModel : ViewModel() {
+class AdicionarLivroViewModel(
+    private val bibliotecaRepository: BibliotecaRepository,
+    private val tokenRepository: TokenRepository
+) : ViewModel() {
     private val _state = MutableStateFlow(AdicionarLivroViewState())
     val state = _state.asStateFlow()
 
@@ -44,7 +49,7 @@ class AdicionarLivroViewModel : ViewModel() {
             }
 
             AdicionarLivroIntent.OnAdicionarClicked -> {
-
+                postLivro()
             }
 
             AdicionarLivroIntent.OnRetryClicked -> {
@@ -64,6 +69,28 @@ class AdicionarLivroViewModel : ViewModel() {
                     readingStatus = intent.status,
                     showStatusBottomSheet = false
                 )
+            }
+        }
+    }
+
+    private fun postLivro() {
+        viewModelScope.launch {
+            _state.value = _state.value.copy(screenType = ScreenType.Loading)
+
+            runCatching {
+                val tokenData = tokenRepository.getToken()
+                bibliotecaRepository.postLivro(
+                    titulo = state.value.titulo,
+                    sinopse = state.value.sinopse,
+                    totalPaginas = state.value.totalPaginas.toIntOrNull() ?: 0,
+                    autor = state.value.autor,
+                    idSituacao = state.value.readingStatus.id,
+                    userId = tokenData.userId
+                )
+            }.onSuccess {
+                _viewEvent.emit(AdicionarLivroViewEvent.NavigateToHome)
+            }.onFailure {
+                _state.value = _state.value.copy(screenType = ScreenType.Error)
             }
         }
     }

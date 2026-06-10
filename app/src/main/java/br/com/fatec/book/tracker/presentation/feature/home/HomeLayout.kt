@@ -20,6 +20,8 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +39,7 @@ import br.com.fatec.book.tracker.presentation.feature.home.state.HomeIntent
 import br.com.fatec.book.tracker.presentation.feature.home.state.HomeViewState
 import br.com.fatec.book.tracker.ui.components.card.CardAdicionarLivro
 import br.com.fatec.book.tracker.ui.components.card.CardBiblioteca
+import br.com.fatec.book.tracker.ui.images.BookTrackerDrawableResources
 import br.com.fatec.book.tracker.ui.theme.BookTrackerTheme
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -57,26 +60,40 @@ fun HomeLayout(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp),
     ) {
-
-        Row(
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.End
         ) {
-            Text(
-                text = "Bem vindo(a) ao Book Tracker",
-                modifier = Modifier.weight(1f),
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.Bold,
-                ),
-            )
+            IconButton(
+                onClick = {
+                    onIntent(HomeIntent.OnSairClicked)
+                },
+            ) {
+                Icon(
+                    imageVector = BookTrackerDrawableResources.Vectors.sair,
+                    contentDescription = null,
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = "Bem vindo(a) ao Book Tracker",
+                    modifier = Modifier.weight(1f),
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.Bold,
+                    ),
+                )
 
-            Image(
-                contentDescription = null,
-                modifier = Modifier.weight(1f),
-                painter = painterResource(id = R.drawable.imagem_logo_booktracker),
-            )
+                Image(
+                    contentDescription = null,
+                    modifier = Modifier.weight(1f),
+                    painter = painterResource(id = R.drawable.imagem_logo_booktracker),
+                )
 
+            }
         }
 
         Column {
