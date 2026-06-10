@@ -48,21 +48,11 @@ class MainViewModel(
             _state.value = MainState.Login
         }
     }
-
-    fun navigateToLogin() {
-        _state.value = MainState.Login
-    }
-
-    fun navigateToRegister() {
-        _state.value = MainState.Register
-    }
-
 }
 
 sealed interface MainState {
     object Loading : MainState
     object Login : MainState
-    object Register : MainState
     object Logged : MainState
     object SessionExpired : MainState
 }

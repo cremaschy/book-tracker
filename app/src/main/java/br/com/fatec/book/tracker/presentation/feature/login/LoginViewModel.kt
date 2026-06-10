@@ -6,7 +6,7 @@ import br.com.fatec.book.tracker.domain.repository.TokenRepository
 import br.com.fatec.book.tracker.presentation.feature.login.state.LoginIntent
 import br.com.fatec.book.tracker.presentation.feature.login.state.LoginViewEvent
 import br.com.fatec.book.tracker.presentation.feature.login.state.LoginViewState
-import br.com.fatec.book.tracker.presentation.feature.placeholder.list.state.ScreenType
+import br.com.fatec.book.tracker.ui.components.ScreenType
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow

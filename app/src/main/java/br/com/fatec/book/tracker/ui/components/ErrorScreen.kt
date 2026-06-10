@@ -1,4 +1,4 @@
-package br.com.fatec.book.tracker.presentation.feature.placeholder.list.screen
+package br.com.fatec.book.tracker.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

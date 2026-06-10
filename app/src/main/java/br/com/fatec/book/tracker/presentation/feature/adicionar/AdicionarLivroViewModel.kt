@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroIntent
 import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroViewEvent
 import br.com.fatec.book.tracker.presentation.feature.adicionar.state.AdicionarLivroViewState
-import br.com.fatec.book.tracker.presentation.feature.placeholder.list.state.ScreenType
+import br.com.fatec.book.tracker.ui.components.ScreenType
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -49,6 +49,21 @@ class AdicionarLivroViewModel : ViewModel() {
 
             AdicionarLivroIntent.OnRetryClicked -> {
                 _state.value = _state.value.copy(screenType = ScreenType.Content)
+            }
+
+            is AdicionarLivroIntent.OnSituacaoClicked -> {
+                _state.value = _state.value.copy(showStatusBottomSheet = true)
+            }
+
+            is AdicionarLivroIntent.OnDismissStatusBottomSheet -> {
+                _state.value = _state.value.copy(showStatusBottomSheet = false)
+            }
+
+            is AdicionarLivroIntent.OnSituacaoChange -> {
+                _state.value = _state.value.copy(
+                    readingStatus = intent.status,
+                    showStatusBottomSheet = false
+                )
             }
         }
     }

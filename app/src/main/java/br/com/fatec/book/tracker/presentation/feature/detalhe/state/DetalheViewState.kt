@@ -10,5 +10,6 @@ data class DetalheViewState(
         totalPaginas = 0,
         autor = "0",
         idSituacao = 0,
+        paginasLidas = 0,
     )
 )
