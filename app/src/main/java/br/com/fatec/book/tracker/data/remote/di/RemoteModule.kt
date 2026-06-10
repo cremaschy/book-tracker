@@ -1,7 +1,9 @@
 package br.com.fatec.book.tracker.data.remote.di
 
+import br.com.fatec.book.tracker.data.data.data.source.BibliotecaDataSource
 import br.com.fatec.book.tracker.data.data.data.source.TokenDataSource
 import br.com.fatec.book.tracker.data.remote.api.TokenApi
+import br.com.fatec.book.tracker.data.remote.data.source.BibliotecaDataSourceRemote
 import br.com.fatec.book.tracker.data.remote.data.source.TokenDataSourceRemote
 import br.com.fatec.book.tracker.data.remote.service.TokenService
 import io.ktor.client.HttpClient
@@ -23,4 +25,6 @@ val remoteModule = module {
 
     factoryOf(::TokenDataSourceRemote)
         .bind<TokenDataSource.Remote>()
+    factoryOf(::BibliotecaDataSourceRemote)
+        .bind<BibliotecaDataSource.Remote>()
 }
