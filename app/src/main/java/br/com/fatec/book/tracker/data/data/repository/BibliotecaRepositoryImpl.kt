@@ -10,16 +10,30 @@ data class BibliotecaRepositoryImpl(
     private val bibliotecaService: BibliotecaService,
     private val bibliotecaDataSource: BibliotecaDataSource.Remote
 ) : BibliotecaRepository {
-    override suspend fun postLivro(livro: Livro): Livro {
-        return bibliotecaDataSource.postLivro(livro).toDomain()
+    override suspend fun postLivro(
+        titulo: String,
+        sinopse: String,
+        totalPaginas: Int,
+        autor: String,
+        idSituacao: Int,
+        userId: String
+    ) {
+        bibliotecaDataSource.postLivro(
+            titulo = titulo,
+            sinopse = sinopse,
+            totalPaginas = totalPaginas,
+            autor = autor,
+            idSituacao = idSituacao,
+            userId = userId
+        )
     }
 
     override suspend fun getLivros(userId: String): List<Livro> {
         return bibliotecaDataSource.getLivros(userId).map { it.toDomain() }
     }
 
-    override suspend fun pathLivro(livroId: Int): Livro {
-        return bibliotecaDataSource.pathLivro(livroId).toDomain()
+    override suspend fun pathLivro(livroId: Int, paginasLidas: Int) {
+        bibliotecaDataSource.pathLivro(livroId, paginasLidas)
     }
 
     override suspend fun deleteLivro(livroId: Int) {

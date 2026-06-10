@@ -107,7 +107,7 @@ fun DetalheLayout(
                 onIntent(DetalheIntent.OnDeleteClicked)
             }
         )
-        
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -172,7 +172,7 @@ fun DetalheLayout(
                 text = "Atualizar progresso",
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    onIntent(DetalheIntent.OnAtualizarProgressoClicked)
+                    showBottomSheet = true
                 },
             )
         }

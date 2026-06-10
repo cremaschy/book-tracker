@@ -1,5 +1,6 @@
 package br.com.fatec.book.tracker.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
@@ -29,7 +30,6 @@ import br.com.fatec.book.tracker.presentation.feature.detalhe.state.DetalheViewE
 import br.com.fatec.book.tracker.presentation.feature.home.HomeScreen
 import br.com.fatec.book.tracker.presentation.feature.home.state.HomeViewEvent
 import br.com.fatec.book.tracker.presentation.feature.login.LoginScreen
-import br.com.fatec.book.tracker.presentation.feature.login.state.LoginViewEvent
 import br.com.fatec.book.tracker.ui.components.LoadingScreen
 import br.com.fatec.book.tracker.ui.theme.BookTrackerTheme
 import org.koin.android.ext.android.inject
@@ -95,6 +95,17 @@ class MainActivity : ComponentActivity() {
                                             modifier = Modifier.padding(innerPadding),
                                             onEvent = { event ->
                                                 when (event) {
+                                                    HomeViewEvent.NavigateToLogin -> {
+                                                        viewModel.onLogout()
+                                                        startActivity(
+                                                            Intent(
+                                                                this@MainActivity,
+                                                                MainActivity::class.java,
+                                                            )
+                                                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+                                                        )
+                                                    }
+
                                                     is HomeViewEvent.NavigateToAdicionar -> {
                                                         topLevelBackStack.add(
                                                             Routes.AdicionarLivro
